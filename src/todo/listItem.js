@@ -4,7 +4,7 @@ export function ListItem({ index,name, status,completedItem,removeItem }) {
         if (status === 1) {
             return  <li key={index} className="completed">
                   <div className="view">
-                      <input className="toggle" type="checkbox"  onClick={completedItem}/>
+                      {/* <input className="toggle" type="checkbox"  onClick={completedItem}/> */}
                       <label>{name}</label>
                       {/* <button className="destroy" onClick={removeItem}></button> */}
                   </div>
