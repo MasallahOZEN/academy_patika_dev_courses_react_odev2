@@ -35,6 +35,19 @@ function TodoApp(){
         setForm({...form,[e.target.name]:e.target.value})
       }
 
+    const removeItemHandler=(e,item)=>{
+        item.status=-1;
+        setTodoItems([...todoItems,item]);
+    }
+
+    const completedItemHandler=(e,item)=>{
+        
+        setTodoItems([...todoItems,{
+            name:item.name,
+            id:item.id,
+            status:1
+        }]);
+    }
     const handleKeyDown = (event) => {        
         if (event.key === "Enter") {
             handleAdd(event);
@@ -47,6 +60,17 @@ function TodoApp(){
 
         e.preventDefault();
     };
+
+    const filterItems=(status)=>{
+        
+        var filteredItemList = todoItems.filter((f)=>{
+            if(f.status === status) return true;
+
+            return false;
+        });
+
+        setTodoItems(filteredItemList);
+    }
 
     return (<>
     <div className="todoapp">
@@ -65,7 +89,7 @@ function TodoApp(){
             <ul className="todo-list">
                 {
                     todoItems.map((item,index)=>{
-                        return <ListItem key={index} name={item.name} status ={item.status} />
+                        return <ListItem key={index} name={item.name} status ={item.status} completedItem={(e)=>{completedItemHandler(e,item)}} removeItem={(e)=>{removeItemHandler(e,item)}}/>
                     })
                 }
             </ul>
@@ -82,10 +106,10 @@ function TodoApp(){
                     <a href="#/" className="selected">All</a>
                 </li>
                 <li>
-                    <a href="#/">Active</a>
+                    <a href="#/" onClick={()=>filterItems(0)}>Active</a>
                 </li>
                 <li>
-                    <a href="#/">Completed</a>
+                    <a href="#/" onClick={()=>filterItems(1)}>Completed</a>
                 </li>
             </ul>
 
